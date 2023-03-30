@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../jQuery/jQuery-3.6.4版本.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				
+				$('#btn').on('click',function(){
+					//$.get('http://www.liulongbin.top:3006/api/getbooks',function(res){
+						//console.log(res);
+					//});
+					
+					$.get('http://www.liulongbin.top:3006/api/getbooks',{id:1},function(res){
+						console.log(res);
+					});
+				});
+				
+				
+				$('#btn2').on('click',function(){
+					$.post('http://www.liulongbin.top:3006/api/addbook',{bookname:'红楼梦',author:'曹雪芹',publisher:'上海图书出版社'},function(res){
+						console.log(res);
+					});
+				});
+				
+			});
+		</script>
+	</head>
+	<body>
+		<button id="btn">发起不带/带参数的get请求</button>
+		
+		<button id="btn2">post提交数据</button>
+	</body>
+</html>

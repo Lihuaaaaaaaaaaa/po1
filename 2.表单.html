@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../jQuery/jQuery-3.6.4版本.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				$('#fr').on('submit',function(e){
+					e.preventDefault();
+					var data = $(this).serialize();
+					console.log(data);
+				});
+				
+					
+			});
+		</script>
+	</head>
+	<body>
+		<form action="/login" id="fr">
+			<input type="text" name="user_name" />
+			<input type="password" name="password" />
+			<button type="submit">提交</button>
+		</form>
+	</body>
+</html>

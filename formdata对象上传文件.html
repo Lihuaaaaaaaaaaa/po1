@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../jQuery/jQuery-3.6.4版本.js" type="text/javascript" charset="utf-8"></script>
+		
+	</head>
+	<body>
+		<form id="form1">
+			上传文件:<input type="file" id="file1"/>
+			<br />
+			<input type="submit" value="提交" id="upload"/>
+			<br />
+			<img src="" id="img" width="800"/>
+		</form>
+	</body>
+	
+	<script type="text/javascript">
+			
+				/*var form = document.querySelector('#form1');
+				form.addEventListener('submit',function(){
+					e.preventDefault();
+					
+					var fd = FormData(form);
+					var xhr = new XMLHttpRequest;
+					xhr.open('POST','http://www.liulongbin.top:3006/api/formdata');
+					xhr.send(fd);
+					xhr.onreadystatechange = function(){
+						
+						if(xhr.readyState === 4&& xhr.status === 200){
+							//打印响应的内容
+						console.log(JSON.parse(xhr.responseText));
+					   };
+					}	
+				})*/
+				
+				
+				/*验证是否上传文件 */
+				
+				//获取上传文件的按钮
+				var upload = document.querySelector('#upload');
+				
+				//为按钮添加click事件监听
+				upload.addEventListener('click',function(){
+					//找到选择的文件列表
+					var files = document.querySelector('#file1').files;
+					if(files.length <= 0){
+						return alert('请上传文件');
+					}
+					
+					var fd  = new FormData;
+					//将用户选择的文件添加到formdata中
+					fd.append('avtar',files[0])
+					
+					
+					/*使用xhr发起上传文件请求*/
+					//创建xhr对象
+					var xhr = new XMLHttpRequest();
+					
+					//调用open函数,请求类型必须为post
+					xhr.open('POST','http://www.liulongbin.top:3006/api/upload/avatar');
+					
+					//发起请求
+					xhr.send(fd);
+					
+					/*监听onreadystatechange事件*/
+					xhr.onreadystatechange = function(res){
+						if(xhr.readyState === 4&& xhr.status === 200){
+							//打印响应的内容
+						var data = (JSON.parse(xhr.responseText));
+						
+							if(data.status === 200){
+								
+								//上传成功
+								document.querySelector('#img').src = 'http://www.liulongbin.top:3006'+data.url;
+							   }else{
+								console.log('图片上传失败'+data.message);
+						   }
+					   }
+					}
+				});
+				
+				
+			
+			
+		</script>
+		
+</html>

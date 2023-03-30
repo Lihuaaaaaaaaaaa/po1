@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<script src="../jQuery/jQuery-3.6.4版本.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/template-web.js" type="text/javascript" charset="utf-8"></script>
+		
+		<!--入口函数-->
+		<script type="text/javascript">
+			$(function(){
+				
+				function getCommentList(){
+					$.ajax({
+						method:"get",
+						url:"http://www.liulongbin.top:3006/api/cmtlist",
+						success:function(res){
+							//console.log(res);
+							if(res.status !== 200)return alert('评论列表获取失败');
+							console.log('评论列表获取成功');
+								
+							var rows = [];
+							$.each(res.data,function(i,item){
+								var str = '<li class="list-group-item"><span class="badge" style="background-color: #F0AD4E;">评论时间: ' + item.time+  ' </span><span class="badge" style="background-color: #5BC0DE;">评论人: ' + item.username+ '  </span>' + item.content+ '</li>'
+								
+								rows.push(str);
+							});
+							
+							$('#cmt-list').empty().append(rows.join(''));
+						}
+					});
+				}
+				
+				getCommentList();
+				$(function(){
+					
+					$("#formAdd").submit(function(e){
+						e.preventDefault();
+						var data = $(this).serialize();
+						
+						$.post("http://www.liulongbin.top:3006/api/addcmt",data,function(res){
+							if(res.status !== 201){
+								return alert('发表评论失败');
+							}
+						getCommentList();
+						//清空评论框
+						$('#formAdd')[0].reset();
+							
+						});
+					});
+				});
+				
+				
+			});
+		</script>
+	</head>
+	<body>
+		<!--评论面板-->
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">发表评论</h3>
+			</div>
+			
+			<form class="panel-body" id="formAdd">
+				<div>评论人:</div>
+			    <input type="text" class="form-control"  name="username"/>
+			
+			    <div>评论内容:</div>
+			    <textarea class="form-control" name="content"></textarea>
+			    
+			    <button type="submit" class="btn btn-primary">发表评论</button>
+				
+			</form>
+			
+		</div>
+		
+		
+		
+		<!--评论列表-->
+		<ul class="list-group" id="cmt-list">
+			<li class="list-group-item">
+				<span class="badge" style="background-color: #F0AD4E;">评论时间:</span>
+			    <span class="badge" style="background-color: #5BC0DE;">评论人:</span>
+			    Item 1
+			</li>
+			
+		</ul>
+	</body>
+</html>

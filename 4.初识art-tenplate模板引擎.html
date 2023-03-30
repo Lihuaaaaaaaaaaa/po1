@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<!--导入模板引擎-->
+		<script src="../jQuery/jQuery-3.6.4版本.js" type="text/javascript" charset="utf-8"></script>
+		<script src="art-template/template-web.js" type="text/javascript" charset="utf-8"></script>
+		
+		<!--定义模板-->
+		<!--双括号是占位符-->
+		<script type="text/html" id="tpl-user">
+		
+			<h1>{{name}}  -----  {{age}}</h1>
+		</script>
+		
+		<script >
+			//定义需要渲染的数据
+			var date = {name:'zs',age:20}
+			
+			//调用template函数
+			var htmlStr = template('tpl-user',date);
+			console.log(htmlStr);
+			
+			//渲染html
+			$(function(){
+				$('#container').html(htmlStr);
+			})
+			
+			
+		</script>
+	</head>
+	<body>
+		
+		<div id="container"></div>
+		
+	</body>
+</html>

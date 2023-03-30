@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<script src="../jQuery/jQuery-3.6.4版本.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				//监听到ajax请求开始了,load动图显示
+				$(document).ajaxStart(function(){
+					$('#loading').show();
+				});	
+					
+				//监听到ajax请求完成了,load动图隐藏
+				$(document).ajaxStop(function(){
+					$('#loading').hide();
+				});	
+				
+				
+					/*验证是否选择文件*/
+				//找到提交按钮,绑定单击响应函数
+				$('#btn01').on('click',function(){
+					
+					//将jquery 对象转化为dom对象,并获取选中文件列表
+					var files = $('#file1')[0].files;
+					//判断是否选中文件
+					if(files.length <= 0){
+						return alert('请选择文件');
+					}
+					
+					
+					
+					
+					/*向formdata中追加文件*/
+					var fd = new FormData();
+					fd.append('avtar',files[0])
+					
+					
+					
+					
+					/*使用jquery 发起上传文件请求*/
+					$.ajax({
+						method:'POST',
+						url:'http://www.liulongbin.top:3006/api/upload/avatar',
+						data:fd,
+						//不修改conte-type属性
+						contentType:false,
+						//不对formdata中的数据进行url编码,而是将formdata中的数据原样发送到服务器
+						processData:false,
+						success:function(res){
+							console.log(res);
+						}
+					});
+				});
+				
+				
+			})
+			
+		</script>
+		
+	</head>
+	<body>
+		上传文件:<input type="file"  id="file1"/>
+		<br />
+		<!--加入load的gif动图-->
+		<img src="聊天机器人/img/loading.gif" style="display: none;" id="loading"/>
+		<br />
+		<button id="btn01">上传</button>
+	</body>
+</html>

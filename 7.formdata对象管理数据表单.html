@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../jQuery/jQuery-3.6.4版本.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				//新建一个FormData对象
+				var fd = new FormData;
+				
+				//为FormData对象添加表单项
+				fd.append('uname','zs');
+				fd.append('upwd','123456');
+				
+				//创建xhr对象
+				var xhr = new XMLHttpRequest;
+				
+				//指定请求类型以及URL 地址
+				xhr.open('POST','http://www.liulongbin.top:3006/api/formdata');
+				
+				//直接提交FormData对象
+				xhr.send(fd);
+				
+				//监听请求状态改变事件
+				xhr.onreadystatechange = function(){
+					
+					if(xhr.readyState === 4&& xhr.status === 200){
+						//打印响应的内容
+					console.log(JSON.parse(xhr.responseText));
+				   }
+				}
+			});
+			
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

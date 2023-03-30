@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../jQuery/jQuery-3.6.4版本.js" type="text/javascript" charset="utf-8"></script>
+		
+		
+			<!--1.定义模板结构-->
+			<script type="text/html" id="tpl-user">
+				<div>姓名: {{name}}</div>
+				<div>年龄: {{ age }}</div>
+				<div>姓别: {{  gender}}</div>
+				<div>住址: {{address  }}</div>
+			</script>
+			
+		
+		
+	</head>
+	<body>
+		<div id="user-box">
+			
+			
+			<script>
+				
+				window.onload = function(){
+							
+				    /*3.封装templace函数*/
+					function template(id,data){
+						var str = document.getElementById(id).innerHTML;
+						console.log(str)
+						
+						var pattern = /{{\s*([a-zA-z]+)\s*]}}/
+						
+						var pattResult;
+						
+						console.log(pattern.exec(str));
+						
+						while((pattResult = pattern.exec(str))){
+							
+							str = str.replace(pattResult[0],data(pattResult[1]));
+							
+						}
+						return str;
+						
+				    }
+					
+					
+					/*2.预调用模板引擎*/
+					
+					//定义数据,格式要和模板结构相同
+					var data = {name: '孙悟空', age: 18, gender:'男', address: '花果山'};
+					
+					//调用模板函数,参数1:模板引擎的id,参数2:需要渲染的数据对象
+					var htmlStr = template('tpl-user',data);
+					
+					//渲染html结构
+					document.getElementById('user-box').innerHTML = htmlStr;
+					
+				};
+				
+			   
+				
+		    </script>
+		
+			
+		</div>
+	</body>
+</html>

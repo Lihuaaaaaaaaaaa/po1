@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/news.css" />
+    <script src="../../jQuery/jQuery-3.6.4版本.js"></script>
+    <script src="../js/template-web.js"></script>
+  </head>
+  <body>
+
+    <div id="news-list"></div>
+
+  </body>
+  
+  <script type="text/javascript">
+  	$(function(){
+  		/*定义一个补零函数*/
+  		function padZero(n){
+  			if(n < 10){ 
+  				return '0'+n;
+  			}else{
+  				return n;
+  			}
+  			
+  		}
+  		
+  		/*定义一个时间过滤器*/
+  		template.defaults.imports.dateFromat = function(date){
+  			
+  			var dt = new Date;
+  			
+  			var y = dt.getFullYear();
+  			var m = padZero (dt.getMonth()+1);
+  			var d = padZero (dt.getDate());
+  			
+  			var hh = padZero (dt.getHours());
+  			var mm = padZero (dt.getMinutes());
+  			var ss = padZero (dt.getSeconds());
+  			
+  			return y+'-'+m+'-'+d+'  '+hh+':'+mm+':'+ss;
+  		}
+  		
+  		
+  		/*1.获取新闻数据*/
+  		function getNewslist(){
+  			$.get('http://www.liulongbin.top:3006/api/news',function(res){
+  				//获取失败的情况
+  				if(res.status!== 200){
+  					return alert('新闻列表获取失败!!!')
+  					}
+  				
+  				for (var i=0 ; i<res.data.length; i++) {
+  					
+  					//把每一项的tags从字符串转化为字符串的数组
+  					res.data[i].tags = res.data[i].tags.split(',');
+  				}
+  			  
+  			  var htmlStr =  template('tpl-news',res);
+  			  $('#news-list').html(htmlStr);
+  			});
+  			
+  		};
+  		
+  		getNewslist();
+  		
+  	});
+  	
+  </script>
+  
+  
+  <!--/*定义template模板*/-->
+  <script type="text/html" id="tpl-news">
+  	{{each data}}
+  	
+   
+  	
+  	<div class="news-item">
+        <img class="thumb" src="{{'http://www.liulongbin.top:3006'  + $value.img}}" alt="" />
+        <div class="right-box">
+          <h1 class="title">{{$value.title}}</h1>
+          <div class="tags">
+          	{{each $value.tags}}
+          	
+            <span>{{$value}}</span>
+            
+            {{/each}}
+          </div>
+          <div class="footer">
+            <div>
+              <span>{{$value.source}}</span>&nbsp;&nbsp;
+              <span>{{$value.time | dateFromat}}</span>
+            </div>
+            <span>评论数：{{$value.cmtcount}}</span>
+          </div>
+        </div>
+      </div>
+  				
+  	{{/each}}			
+  </script>
+</html>

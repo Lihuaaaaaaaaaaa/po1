@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			html body{
+				margin: 0;
+				padding: 0;
+				overflow: hidden;
+			}
+			
+			#angel{
+				position: absolute;
+			}
+		</style>
+		<script src="../jQuery/jQuery-3.6.4版本.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<!--渲染ui结构-->
+		
+			<img src="聊天机器人/angel.gif" id="angel"/>
+	</body>
+	
+	<script type="text/javascript">
+		
+		$(function(){
+			var angel = $('#angel');
+			var timer = null;//定义一个节流阀
+			
+			$(document).on('mousemove',function(e){
+				if(timer){return};//判断节流阀是否为空
+				
+				timer = setTimeout (function(){
+					$(angel).css('left',e.pageX+'px').css('top',e.pageY+'px');
+					timer = null;//当设置了鼠标跟随效果后清空节流阀,方便下次开启延时器
+				},16)
+				
+			});
+			
+		});
+		
+	</script>
+</html>

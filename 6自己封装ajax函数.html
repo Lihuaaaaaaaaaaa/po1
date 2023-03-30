@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../jQuery/jQuery-3.6.4版本.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				
+				/*处理data参数*/
+				function resolveData(data){
+					
+					var arr = [];
+					for (var k in data) {
+						var str = k + '=' + data[k]
+						arr.push(str);
+					}
+					return arr.join('&');
+				};
+				
+				//var res = resolveData({name:'zs',age:18});
+				
+				
+				/*定义itheima函数*/
+				function itheima(options){
+					var xhr = new XMLHttpRequest;
+					//把外界传递的参数对象转化为查询字符串
+					var qs = resolveData(options.data)
+					
+					
+					/*判断请求类型*/
+				if(options.method.toUpperCase() === 'GET'){
+					
+					//发起get请求
+					xhr.open(options.method, options.url +'?' + qs);
+					xhr.send();
+					
+				}else if(options.method.toUpperCase() === 'POST'){
+					
+					//发起post请求
+					xhr.open(options.method, options.url);
+					xhr.setRequestHeader('content-Type','application/x-www-form-urlencoded');
+					xhr.send(qs);
+				}
+				
+					
+					//监听请求状态改变事件
+					xhr.onreadystatechange = function(){
+						
+						if(xhr.readyState === 4&& xhr.status === 200){
+						var  result = JSON.parse(xhr.responseText);
+						options.success(result);
+					   }
+					}
+					
+					
+						//设置超时
+					xhr.timeout = 3000;
+					xhr.ontimeout = function(event){
+						alert('请求超时');
+					}
+				
+					
+				}
+				
+				
+				itheima({
+					method:'GET',
+					url:'http://www.liulongbin.top:3006/api/getbooks',
+					data:{id:1},
+					success:function(res){
+						console.log(res);
+					}
+					
+				})
+				
+				/*itheima({
+					method:'POST',
+					url:'http://www.liulongbin.top:3006/api/addbook',
+					data:{
+						bookname:'白夜行',author:'东野圭吾',publisher:'北京图书出版社'
+					},
+					success:function(res){
+						console.log(res);
+					}
+					
+				})*/
+				
+			});
+			
+			
+		</script>
+	</head>
+	<body>
+		
+		<script >
+			
+			
+			
+		</script>
+	</body>
+</html>
