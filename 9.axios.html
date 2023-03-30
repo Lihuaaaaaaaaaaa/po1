@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		
+		<title></title>
+		<script src="axios/axios.js"></script>
+	</head>
+	<body>
+		
+		<button id="btn1">获取</button>
+		
+		<button id="btn2">上传</button>
+		
+		<button id="btn3">直接使用axios发起get请求</button>
+		
+		
+		
+	<script>
+	
+	  
+		document.querySelector('#btn1').addEventListener('click',function(){
+				axios.get('http://www.liulongbin.top:3006/api/get',{
+				name:'zs',
+				age:19
+			}).then(function(res){
+					//res.data是服务器返回的数据
+					var result = res.data;
+					console.log(res);
+			});
+		});
+		
+		document.querySelector('#btn2').addEventListener('click',function(){
+			//请求的URL 地址
+			var url = 'http://www.liulongbin.top:3006/api/post';
+			//需要提交到服务器的数据
+			var dataObj = {location:'北京',address:'顺义'};
+			
+			axios.post(url,dataObj).then(function(res){
+				//res.data是服务器返回的数据
+					var result = res.data;
+					console.log(result);
+			});
+		});
+		
+		
+		
+		document.querySelector('#btn3').addEventListener('click',function(){
+			var paramsData = {name:'钢铁侠',age:18};
+			
+			axios({
+				
+				method:'get',
+				url:'http://www.liulongbin.top:3006/api/get',
+				params:paramsData
+				
+			}).then(function(res){
+				//res.data是服务器返回的数据
+					var result = res.data;
+					console.log(result);
+			});
+			
+		});
+		
+	</script>
+	</body>
+	
+</html>
